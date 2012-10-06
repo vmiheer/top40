@@ -44,8 +44,12 @@ for line in f:
     for p in br.links(url_regex='mp3$'):
       line = line.replace("\t"," ")
       filename = os.environ['HOME'] + "/Music/"+dateProcessOutput+"/"+str(number)+".mp3"
-      print filename
+      # print filename
       print (br.retrieve(p.url,filename)[0])
+      statinfo = os.stat(filename)
+      if statinfo.st_size < 5000000:
+	os.popen("rm "+filename)
+	continue
       number = number + 1
       break
     break
